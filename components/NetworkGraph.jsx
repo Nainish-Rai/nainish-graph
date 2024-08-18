@@ -271,7 +271,7 @@ const NetworkGraph = () => {
     );
 
   const COMET_SPEED = 0.0033;
-  const COMET_LENGTH = 3;
+  const COMET_LENGTH = 20;
 
   const drawLine = (link, ctx, scale, isSelected, theme) => {
     // if (isString(link.source) || isString(link.target)) return;
@@ -331,6 +331,10 @@ const NetworkGraph = () => {
     gradient.addColorStop(
       1,
       `${color || (theme === "dark" ? "#f4f4f5" : "#18181b")}00`
+    );
+    gradient.addColorStop(
+      0.5,
+      `${color || (theme === "dark" ? "red" : "#18181b")}`
     );
 
     ctx.strokeStyle = gradient;
@@ -411,22 +415,16 @@ const NetworkGraph = () => {
               ...bckgDimensions
             );
         }}
-        backgroundColor={resolvedTheme === "dark" ? "#18181b" : "#ffffff"}
+        backgroundColor={resolvedTheme === "dark" ? "black" : "#ffffff"}
         showNavInfo={false}
         onNodeClick={(node) => {
           setSelectedNode(node);
-
-          if (setChainFocus) setChainFocus(node.id);
         }}
         onLinkClick={() => {
           setSelectedNode(null);
-
-          if (setChainFocus) setChainFocus(null);
         }}
         onBackgroundClick={() => {
           setSelectedNode(null);
-
-          if (setChainFocus) setChainFocus(null);
         }}
         cooldownTime={Infinity}
         enableZoomInteraction={true}

@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen bg-black flex justify-center items-center">
-      {/* <NetworkGraph /> */}
-      <TestGraph />
+      <NetworkGraph />
+      {/* <TestGraph /> */}
     </main>
   );
 }
