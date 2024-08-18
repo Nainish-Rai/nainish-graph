@@ -121,9 +121,13 @@ const sampleData = {
     { source: "Axelar", target: "Filecoin" },
     { source: "Axelar", target: "Sui" },
     { source: "Axelar", target: "Mantle" },
+    { source: "Axelar", target: "Celo" },
+    { source: "Axelar", target: "Celo" },
+    { source: "Axelar", target: "Celo" },
+    { source: "Axelar", target: "Celo" },
   ],
 };
-const NetworkGraph = () => {
+const TestGraph = () => {
   const graphRef = useRef();
   const [selectedNode, setSelectedNode] = useState(null);
 
@@ -176,7 +180,8 @@ const NetworkGraph = () => {
       (TIERS.length + 1 + Math.pow(2, TIERS.length + 1 - (node.tier || 1))) / 2;
     const fillStyleOpecity = isSelected ? "1a" : "0d";
 
-    if (node.color && isSelected) {
+    if (selectedNode?.id === node.id) {
+      ctx.shadowColor = null;
       ctx.strokeStyle = node.color;
       ctx.fillStyle = `${node.color}${fillStyleOpecity}`;
       ctx.beginPath();
@@ -271,7 +276,7 @@ const NetworkGraph = () => {
     );
 
   const COMET_SPEED = 0.0033;
-  const COMET_LENGTH = 3;
+  const COMET_LENGTH = 20;
 
   const drawLine = (link, ctx, scale, isSelected, theme) => {
     // if (isString(link.source) || isString(link.target)) return;
@@ -324,14 +329,22 @@ const NetworkGraph = () => {
       cometEndX,
       cometEndY
     );
+
+    gradient.addColorStop(
+      0.5,
+      `${color || (theme === "dark" ? "cyan" : "#18181b")}`
+    );
     gradient.addColorStop(
       0,
-      `${color || (theme === "dark" ? "#f4f4f5" : "#18181b")}ff`
+      `${color || (theme === "dark" ? "orange" : "#18181b")}`
     );
     gradient.addColorStop(
       1,
       `${color || (theme === "dark" ? "#f4f4f5" : "#18181b")}00`
     );
+
+    // make comet longer
+    ctx.lineWidth = 0.2;
 
     ctx.strokeStyle = gradient;
     ctx.beginPath();
@@ -393,6 +406,7 @@ const NetworkGraph = () => {
     );
 
   const linkCanvasObject = useLinkCanvasObject(selectedNode, resolvedTheme);
+
   return (
     <div style={{ width: "100%", height: "600px" }}>
       <ForceGraph2D
@@ -411,22 +425,16 @@ const NetworkGraph = () => {
               ...bckgDimensions
             );
         }}
-        backgroundColor={resolvedTheme === "dark" ? "#18181b" : "#ffffff"}
+        backgroundColor={resolvedTheme === "dark" ? "#000000" : "#ffffff"}
         showNavInfo={false}
         onNodeClick={(node) => {
           setSelectedNode(node);
-
-          if (setChainFocus) setChainFocus(node.id);
         }}
         onLinkClick={() => {
           setSelectedNode(null);
-
-          if (setChainFocus) setChainFocus(null);
         }}
         onBackgroundClick={() => {
           setSelectedNode(null);
-
-          if (setChainFocus) setChainFocus(null);
         }}
         cooldownTime={Infinity}
         enableZoomInteraction={true}
@@ -449,4 +457,4 @@ const NetworkGraph = () => {
   );
 };
 
-export default NetworkGraph;
+export default TestGraph;

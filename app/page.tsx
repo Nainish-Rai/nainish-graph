@@ -3,6 +3,7 @@ import Image from "next/image";
 import graphData from "../graphData.json";
 import Graph from "@/components/NetworkGraph";
 import NetworkGraph from "@/components/NetworkGraph";
+import TestGraph from "@/components/TestGraph";
 export default function Home() {
   // Sample data for the graph
   const sampleData = {
@@ -19,7 +20,8 @@ export default function Home() {
 
   return (
     <main className="w-full min-h-screen bg-black flex justify-center items-center">
-      <NetworkGraph />
+      {/* <NetworkGraph /> */}
+      <TestGraph />
     </main>
   );
 }
